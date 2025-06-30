@@ -8,7 +8,7 @@ const Hangman = () => {
     const [level, setLevel] = useState(null);
 
     async function selectLevel(level) {
-        const response = await fetch('http://localhost:8080/api/selectLevel', {
+        const response = await fetch('https://hangman-backend-o08j.onrender.com/api/selectLevel', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
