@@ -12,7 +12,7 @@ const BoardGame = ({ attemptsOriginal, maskedWordOriginal, levelOriginal }) => {
 
 
     async function checkLetter(letter) {
-        const response = await fetch('http://localhost:8080/api/checkLetter', {
+        const response = await fetch('https://hangman-backend-o08j.onrender.com/api/checkLetter', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
