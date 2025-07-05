@@ -1,14 +1,19 @@
 import BoardGame from "./BoardGame";
 import LevelSelector from "./LevelSelector";
 import { useState } from "react";
+
+
+
 const Hangman = () => {
     const [word, setWord] = useState(null);
     const [attempts, setAttempts] = useState(null);
     const [maskedWord, setMaskedWord] = useState(null);
     const [level, setLevel] = useState(null);
+    // Import the public API URL from environment variables
+    const PUBLIC_API_URL = import.meta.env.PUBLIC_API_URL;
 
     async function selectLevel(level) {
-        const response = await fetch('https://hangman-backend-rpu4.onrender.com/api/selectLevel', {
+        const response = await fetch(`${PUBLIC_API_URL}/api/selectLevel`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
