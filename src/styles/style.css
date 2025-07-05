@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'SA';
+  src: url('../styles/fonts/actionj.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Memories';
+  src: url('../styles/fonts/memories.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Homework';
+  src: url('../styles/fonts/homework.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

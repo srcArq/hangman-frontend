@@ -37,12 +37,10 @@ const BoardGame = ({ attemptsOriginal, maskedWordOriginal, levelOriginal }) => {
     }
     return (
         <div className="board-game">
-            <h1>Board Game Component</h1>
-            <p>This is a placeholder for the board game component.</p>
             <div className="game-info">
                 <AttempsImage attemptsOriginal={{ attempts }} level={levelOriginal.level} />
                 <p>Attempts: {attempts}</p>
-                <p>Masked Word: {maskedWord}</p>
+                <p className="masked-word">{maskedWord}</p>
                 <>{maskedWord && <KeyBoard handleCheckLetter={checkLetter} />}
                 </>
             </div>

@@ -1,22 +1,23 @@
 ---
 import Hangman from "../components/Hangman";
 import LevelSelector from "../components/LevelSelector";
-
-
+import '../styles/notebook.css';
+import '../styles/style.css';
+import '../styles/boardGame.css';
 
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+		<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"> -->
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
 	<body>
-		<h1>Ahorcado</h1>
+		<h1 class="title">AHORCADO</h1>
 		<Hangman client:load/>
 		
 	</body>
