@@ -39,7 +39,7 @@ const letters = [
       {letters.map((letter) => (
         <button
           key={letter}
-          className={`key px-3 py-2 rounded-lg shadow ${usedLetters.has(letter) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+          className={`gameButton key px-3 py-2 rounded-lg shadow ${usedLetters.has(letter) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
           onClick={() => handleLetter(letter)}
           disabled={usedLetters.has(letter)}
         >

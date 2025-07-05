@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    height: 100dvh;
+
+    background-image:
+        /* Líneas horizontales (rayas) */
+        repeating-linear-gradient(to bottom,
+            black 0,
+            black 1px,
+            transparent 1px,
+            transparent 30px),
+        /* Línea vertical de margen */
+        linear-gradient(to right,
+            transparent 49px,
+            black 49px,
+            black 50px,
+            transparent 50px),
+        /* Círculos de anillas (izquierda de la línea vertical) */
+        radial-gradient(circle, black 0%, black 20%, transparent 21%);
+
+    background-repeat: repeat, no-repeat, repeat-y;
+
+    background-position:
+        top left,
+        /* rayas horizontales */
+        top left,
+        /* línea vertical */
+        20px 15px;
+    /* círculos de anillas */
+
+    background-size:
+        auto 30px,
+        /* rayas horizontales */
+        100% auto,
+        /* línea vertical */
+        10px 60px;
+    /* círculos (tamaño y separación vertical) */
+}
+
+.title {
+    font-family: 'SA', sans-serif;
+    font-size: 10em;
+    text-align: center;
+    margin-top: 70px;
+}
+
+.fontBody {
+    font-family: 'Memories';
+    font-size: 5em;
+    letter-spacing: 0.1em;
+    text-align: center;
+}
+
+.level-buttons {
+    font-family: 'Memories';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.gameButton {
+    position: relative;
+    /* ✅ necesario para el ::before */
+    font-family: 'Memories';
+    font-size: 3em;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: black 2px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    overflow: hidden;
+    /* opcional si quieres que el borde no sobresalga */
+    z-index: 0;
+}
+
+.gameButton:hover {
+    background-color: #f0f0f0;
+}
+
+.gameButton::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    border: 2px solid black;
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 0;
+    z-index: 1;
+    /* ✅ puede estar sobre el botón para que se vea */
+    pointer-events: none;
+}
+
+.gameButton:hover::before {
+    animation: trazo-circular 0.8s ease forwards;
+}
+
+@keyframes trazo-circular {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
