@@ -67,7 +67,14 @@ body {
     text-align: center;
     margin-top: 70px;
     width: 100vw;
+}
 
+.title.second-step {
+    font-size: 5vw;
+    @media screen and (max-width: 768px) {
+        margin-left: 49px;
+        font-size: 8vw;
+    }
 }
 
 .fontBody {
@@ -102,6 +109,7 @@ body {
     border: black 2px solid;
     border-radius: 5px;
     cursor: pointer;
+    color: black;
     font-weight: bold;
     overflow: hidden;
     /* opcional si quieres que el borde no sobresalga */
