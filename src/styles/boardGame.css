@@ -1,4 +1,3 @@
-/* 1) Reset global y box‑sizing */
 *,
 *::before,
 *::after {
@@ -7,12 +6,14 @@
     box-sizing: border-box;
 }
 
-/* 2) Forzar dimensiones del viewport y ocultar scroll */
 html {
-    overflow: hidden;
+    /* overflow: hidden; */
     /* no scroll horizontal ni vertical */
 }
 
+body {
+    overflow: visible;
+}
 .game-info {
     display: flex;
     flex-direction: row;
@@ -22,16 +23,14 @@ html {
     /* respeta el padding del padre */
     font-size: 1.5em;
     font-weight: bold;
+    margin-left: 49px;
 
 
 }
 
-/* 2) Estilos comunes a ambas columnas */
+/* Style columns */
 .column {
-
-    /* cada columna ocupa espacio disponible */
     min-width: 0;
-    /* permite que el contenido se encoja */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,7 +38,6 @@ html {
 
 .col-left {
     flex: 0 0 40%;
-    /* no crece ni encoge, base 40% */
     display: flex;
     flex-direction: column;
     margin-top: 10vh;
@@ -49,17 +47,19 @@ html {
 
 .col-right {
     flex: 0 0 60%;
-    /* no crece ni encoge, base 60% */
     display: flex;
+    margin-top: 10vh;
     flex-direction: column;
-    align-items: flex-start-center;
+    align-items: center;
+    
 }
 
-/* 3) Ajustes particulares */
+
 .col-left .attempts-image {
-    width: 25vw;
+    width: 28vw;
     max-width: 100%;
     margin-bottom: 1rem;
+    
 }
 
 .col-left .attempts {
@@ -69,7 +69,7 @@ html {
 }
 
 .col-right .masked-word {
-    font-size: 4em;
+    font-size: 3em;
     letter-spacing: 0.1em;
     text-align: center;
     margin-bottom: 1rem;
@@ -80,10 +80,12 @@ html {
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem;
-    width: 80%;
+    width: 70%;
     align-items: flex-start;
+    margin-right: 1rem;
 }
 
-.col-right .keyboard button {
-    padding: 1vw 1.2vh;
+.col-right .keyboard .gameButton {
+    padding: 1.2vw 1.2vh;
+    color: black;
 }

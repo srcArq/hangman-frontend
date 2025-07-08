@@ -35,7 +35,7 @@ const letters = [
   ...Array.from({ length: 12 }, (_, i) => String.fromCharCode(79 + i)), // O-Z
 ];
   return (
-    <div className="keyboard grid grid-cols-7 gap-2 p-4">
+    <div className="keyboard">
       {letters.map((letter) => (
         <button
           key={letter}

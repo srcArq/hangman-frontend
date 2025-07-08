@@ -36,30 +36,33 @@ const BoardGame = ({ attemptsOriginal, maskedWordOriginal, levelOriginal }) => {
         console.log('Selected level:', data);
     }
     return (
-        <div className="board-game">
-            <div className="game-info">
-                  <div className="column col-left">
+        <>
+        
+            <div className="board-game">
+                <div className="game-info">
+                    <div className="column col-left">
 
-                <AttempsImage attemptsOriginal={{ attempts }} level={levelOriginal.level} />
-                <p className="attempts">Intentos: {attempts}</p>
+                        <AttempsImage attemptsOriginal={{ attempts }} level={levelOriginal.level} />
+                        <p className="attempts">Intentos: {attempts}</p>
+                    </div>
+                    <div className="column col-right">
+                        <p className="masked-word">{maskedWord}</p>
+                        <>{maskedWord && <KeyBoard handleCheckLetter={checkLetter} />}
+                        </>
+                    </div>
                 </div>
-                <div className="column col-right">
-                <p className="masked-word">{maskedWord}</p>
-                <>{maskedWord && <KeyBoard handleCheckLetter={checkLetter} />}
-                </>
-                </div>
-            </div>
             {(isGameOver || isWinner) && <Modal
-                title={isWinner ? "¡Ganaste!" : "Juego Terminado"}
-                message={isWinner ? "¡Felicidades! Has adivinado la palabra." : `Lo siento, has agotado tus intentos. La palabra era '${resultWord}'.`}
-                actionLabel={"Jugar de nuevo"}
-                onAction={() => {
-                    window.location.reload();
-                }}
+                    title={isWinner ? "¡Ganaste!" : "Juego Terminado"}
+                    message={isWinner ? "¡Felicidades! Has adivinado la palabra." : `Lo siento, has agotado tus intentos. La palabra era '${resultWord}'.`}
+                    actionLabel={"Jugar de nuevo"}
+                    onAction={() => {
+                        window.location.reload();
+                    }}
 
-            />
+                />
             }
-        </div>
+            </div>
+        </>
     );
 }
 export default BoardGame;
