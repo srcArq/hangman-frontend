@@ -1,7 +1,7 @@
 // src/components/Modal.jsx
 import React, { useRef, useEffect } from 'react';
 
-const Modal = ({ open, title, message, actionLabel, onAction }) => {
+const Modal = ({ open, title, message, image, actionLabel, onAction }) => {
   const dialogRef = useRef();
 
   useEffect(() => {
@@ -17,6 +17,7 @@ const Modal = ({ open, title, message, actionLabel, onAction }) => {
     <dialog ref={dialogRef} className="dialog-modal">
       <form method="dialog" style={{ padding: '1.5rem', width: '90vw', maxWidth: '400px' }}>
         <h2 className="title-modal">{title}</h2>
+        {image && <img className="image-modal" src={image} alt="Modal" />}
         <p className="message-modal">{message}</p>
         <div>
           <button

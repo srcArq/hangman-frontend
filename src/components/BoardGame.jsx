@@ -56,6 +56,7 @@ const BoardGame = ({ attemptsOriginal, maskedWordOriginal, levelOriginal }) => {
                 open={isGameOver || isWinner}
                 title={isWinner ? "¡Ganaste!" : "Juego Terminado"}
                 message={isWinner ? "¡Felicidades! Has adivinado la palabra." : `Lo siento, has agotado tus intentos. La palabra era '${resultWord}'.`}
+                image={isWinner ? "/assets/images/hangman-winner.png" : "/assets/images/hangman-loser.png"}
                 actionLabel="Jugar de nuevo"
                 onAction={() => window.location.reload()}
             />
