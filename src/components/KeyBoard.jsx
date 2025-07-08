@@ -28,7 +28,7 @@ const KeyBoard = ({ handleCheckLetter }) => {
     return () => window.removeEventListener('keydown', listener);
   }, [usedLetters]);
 
-  // Create letters A-Z
+  // Create letters A-Z including Ñ
 const letters = [
   ...Array.from({ length: 14 }, (_, i) => String.fromCharCode(65 + i)), // A-N
   'Ñ',
@@ -39,7 +39,7 @@ const letters = [
       {letters.map((letter) => (
         <button
           key={letter}
-          className={`gameButton key px-3 py-2 rounded-lg shadow ${usedLetters.has(letter) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+          className={`gameButton key black px-3 py-2 rounded-lg shadow ${usedLetters.has(letter) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
           onClick={() => handleLetter(letter)}
           disabled={usedLetters.has(letter)}
         >

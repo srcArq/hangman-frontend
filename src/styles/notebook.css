@@ -1,23 +1,22 @@
-/* 1) Reset global y box‑sizing */
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* 2) Forzar dimensiones del viewport y ocultar scroll */
 html {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;    /* no scroll horizontal ni vertical */
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }
 
 body {
-  min-width: 100%;
-  min-height: 100%;
-  overflow: hidden;    /* redundante, pero asegura que nada desborde */
+    min-width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+
 }
 
 body {
@@ -28,34 +27,34 @@ body {
     height: 100vh;
 
     background-image:
-        /* Líneas horizontales (rayas) */
+        /* Horizontal stripes */
         repeating-linear-gradient(to bottom,
             black 0,
             black 1px,
             transparent 1px,
             transparent 30px),
-        /* Línea vertical de margen */
+        /* Vertical margin line */
         linear-gradient(to right,
             transparent 49px,
             black 49px,
             black 50px,
             transparent 50px),
-        /* Círculos de anillas (izquierda de la línea vertical) */
+        /* Ring circles (left of the vertical line) */
         radial-gradient(circle, black 0%, black 20%, transparent 21%);
 
     background-repeat: repeat, no-repeat, repeat-y;
 
     background-position:
         top left,
-        /* rayas horizontales */
+        /* horizontal stripes */
         top left,
-        /* línea vertical */
+        /* vertical line */
         20px 15px;
-    /* círculos de anillas */
+    /* ring circles */
 
     background-size:
         auto 30px,
-        /* rayas horizontales */
+        /* horizontal stripes */
         100% auto,
         /* línea vertical */
         10px 60px;
@@ -68,7 +67,7 @@ body {
     text-align: center;
     margin-top: 70px;
     width: 100vw;
-    
+
 }
 
 .fontBody {
@@ -85,8 +84,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: 18px;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .gameButton {
@@ -108,42 +108,52 @@ body {
     z-index: 0;
 }
 
+/*Hover effect for gameButton: draw cross */
 .gameButton:hover {
     background-color: #f0f0f0;
 }
 
-.gameButton::before {
+/* Ambas líneas iniciales, ocultas (scaleX=0) y rotadas */
+.gameButton::before,
+.gameButton::after {
     content: '';
     position: absolute;
-    top: -10px;
-    left: -10px;
-    width: calc(100% + 20px);
-    height: calc(100% + 20px);
-    border: 2px solid black;
-    border-radius: 50%;
-    transform: scale(0);
-    opacity: 0;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    /* un poco más para cubrir esquinas */
+    height: 2px;
+    /* grosor de lápiz */
+    background: rgba(46, 45, 45, 0.436);
+    transform-origin: center center;
+    transform: translate(-50%, -50%) rotate(45deg) scaleX(0);
+    /* estarán sobre el botón */
     z-index: 1;
-    /* ✅ puede estar sobre el botón para que se vea */
-    pointer-events: none;
 }
 
+/* Second line with opposite rotation */
+.gameButton::after {
+    transform: translate(-50%, -50%) rotate(-45deg) scaleX(0);
+}
+
+/* Keyframes for scaling from 0 → 1 while maintaining rotation */
+@keyframes draw-line-1 {
+    to {
+        transform: translate(-50%, -50%) rotate(45deg) scaleX(1);
+    }
+}
+
+@keyframes draw-line-2 {
+    to {
+        transform: translate(-50%, -50%) rotate(-45deg) scaleX(1);
+    }
+}
+
+/* On hover, first line / then the opposite */
 .gameButton:hover::before {
-    animation: trazo-circular 0.8s ease forwards;
+    animation: draw-line-1 0.3s ease-out forwards;
 }
 
-@keyframes trazo-circular {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+.gameButton:hover::after {
+    animation: draw-line-2 0.3s ease-out 0.15s forwards;
 }
