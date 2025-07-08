@@ -35,6 +35,7 @@ const Hangman = () => {
     }
     return (
         <>
+        	<h1 className={`title ${word ? 'second-step' : ''}`}>AHORCADO</h1>
             {word === null && <LevelSelector onSelectLevel={selectLevel} />}
             {attempts && maskedWord && <BoardGame attemptsOriginal={{ attempts }} maskedWordOriginal={{ maskedWord }} levelOriginal={{ level }} />}
             

@@ -25,6 +25,10 @@ body {
     font-weight: bold;
     margin-left: 49px;
 
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
+
 
 }
 
@@ -51,6 +55,11 @@ body {
     margin-top: 10vh;
     flex-direction: column;
     align-items: center;
+
+    @media screen and (max-width: 768px) {
+        margin-top: 5vh;
+        
+    }
     
 }
 
@@ -88,5 +97,10 @@ body {
 .col-right .keyboard .gameButton {
     padding: 1.2vw 1.2vh;
     
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed;
+    color: light-dark(rgba(16, 16, 16, 0.3), rgba(16, 16, 16, 0.3));
 }
 
