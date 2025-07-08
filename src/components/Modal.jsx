@@ -1,26 +1,35 @@
 // src/components/Modal.jsx
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
-const Modal = ({ title, message, actionLabel, onAction }) => {
+const Modal = ({ open, title, message, actionLabel, onAction }) => {
+  const dialogRef = useRef();
+
+  useEffect(() => {
+    console.log('Modal open state:', open);
+    if (open) {
+      dialogRef.current.showModal();
+    } else {
+      dialogRef.current.close();
+    }
+  }, [open]);
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl shadow-lg p-6 max-w-sm w-full">
-        <h2 className="text-2xl font-bold mb-4">{title}</h2>
-        <p className="mb-6">{message}</p>
-        <div className="flex justify-end space-x-2">
-          
-          {actionLabel && (
-            <button
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-              onClick={onAction}
-            >
-              {actionLabel}
-            </button>
-          )}
+    <dialog ref={dialogRef} className="dialog-modal">
+      <form method="dialog" style={{ padding: '1.5rem', width: '90vw', maxWidth: '400px' }}>
+        <h2 className="title-modal">{title}</h2>
+        <p className="message-modal">{message}</p>
+        <div>
+          <button
+            type="button"
+            onClick={onAction}
+          >
+            {actionLabel}
+          </button>
         </div>
-      </div>
-    </div>
+      </form>
+    </dialog>
   );
 };
+
 
 export default Modal;

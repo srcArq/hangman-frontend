@@ -13,6 +13,7 @@ const BoardGame = ({ attemptsOriginal, maskedWordOriginal, levelOriginal }) => {
     const PUBLIC_API_URL = import.meta.env.PUBLIC_API_URL;
 
 
+
     async function checkLetter(letter) {
         const response = await fetch(`${PUBLIC_API_URL}/api/checkLetter`, {
             method: 'POST',
@@ -35,34 +36,34 @@ const BoardGame = ({ attemptsOriginal, maskedWordOriginal, levelOriginal }) => {
 
         console.log('Selected level:', data);
     }
+    console.log({ isGameOver, isWinner, open: isGameOver || isWinner });
+
     return (
-        <>
-        
-            <div className="board-game">
-                <div className="game-info">
-                    <div className="column col-left">
+        <div className="board-game">
+            <div className="game-info">
+                <div className="column col-left">
 
-                        <AttempsImage attemptsOriginal={{ attempts }} level={levelOriginal.level} />
-                        <p className="attempts">Intentos: {attempts}</p>
-                    </div>
-                    <div className="column col-right">
-                        <p className="masked-word">{maskedWord}</p>
-                        <>{maskedWord && <KeyBoard handleCheckLetter={checkLetter} />}
-                        </>
-                    </div>
+                    <AttempsImage attemptsOriginal={{ attempts }} level={levelOriginal.level} />
+                    <p className="attempts">Intentos: {attempts}</p>
                 </div>
-            {(isGameOver || isWinner) && <Modal
-                    title={isWinner ? "¡Ganaste!" : "Juego Terminado"}
-                    message={isWinner ? "¡Felicidades! Has adivinado la palabra." : `Lo siento, has agotado tus intentos. La palabra era '${resultWord}'.`}
-                    actionLabel={"Jugar de nuevo"}
-                    onAction={() => {
-                        window.location.reload();
-                    }}
-
-                />
-            }
+                <div className="column col-right">
+                    <p className="masked-word">{maskedWord}</p>
+                    <>{maskedWord && <KeyBoard handleCheckLetter={checkLetter} />}
+                    </>
+                </div>
             </div>
-        </>
+            {(isGameOver || isWinner) &&<Modal
+                open={isGameOver || isWinner}
+                title={isWinner ? "¡Ganaste!" : "Juego Terminado"}
+                message={isWinner ? "¡Felicidades! Has adivinado la palabra." : `Lo siento, has agotado tus intentos. La palabra era '${resultWord}'.`}
+                actionLabel="Jugar de nuevo"
+                onAction={() => window.location.reload()}
+            />
+}
+
+
+        </div>
+
     );
 }
 export default BoardGame;
