@@ -1,32 +1,73 @@
+/* 1) Reset global y box‑sizing */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 2) Forzar dimensiones del viewport y ocultar scroll */
+html {
+    overflow: hidden;
+    /* no scroll horizontal ni vertical */
+}
+
 .game-info {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    font-family: "Memories", sans-serif;
+    gap: 1rem;
+    /* espacio entre columnas */
+    width: 100%;
+    /* respeta el padding del padre */
     font-family: "Memories", sans-serif;
     font-size: 1.5em;
     font-weight: bold;
 
-    .masked-word {
-        font-size: 5em;
-        letter-spacing: 0.1em;
-    }
-
-
-    img {
-        max-width: 500px;
-    }
-
 }
 
-.board-game {
+/* 2) Estilos comunes a ambas columnas */
+.column {
+    flex: 1;
+    /* cada columna ocupa espacio disponible */
+    min-width: 0;
+    /* permite que el contenido se encoja */
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
 }
 
-.keyboard {
-        
-    max-width: 40%;
+/* 3) Ajustes particulares */
+.col-left .attempts-image {
+    width: 30dvh;
+    height: 30dvh;
+    margin-bottom: 1rem;
+}
+
+.col-left .attempts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.col-right .masked-word {
+    font-size: 5em;
+    letter-spacing: 0.1em;
     text-align: center;
+  margin-bottom: 1rem;
+}
+
+.col-right .keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 80%;
+}
+
+.col-right .keyboard button {
+    flex: 1 0 2.5rem;
+    /* cada botón mínimo de 2.5rem, se ajusta */
+    max-width: 3rem;
 }
