@@ -1,8 +1,31 @@
+/* 1) Reset global y box‑sizing */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2) Forzar dimensiones del viewport y ocultar scroll */
+html {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;    /* no scroll horizontal ni vertical */
+}
+
+body {
+  min-width: 100%;
+  min-height: 100%;
+  overflow: hidden;    /* redundante, pero asegura que nada desborde */
+}
+
 body {
     margin: 0;
     padding: 0;
     background-color: #fff;
-    height: 100dvh;
+    width: 100vw;
+    height: 100vh;
 
     background-image:
         /* Líneas horizontales (rayas) */
@@ -41,16 +64,19 @@ body {
 
 .title {
     font-family: 'SA', sans-serif;
-    font-size: 10em;
+    font-size: 10vw;
     text-align: center;
     margin-top: 70px;
+    width: 100vw;
+    
 }
 
 .fontBody {
     font-family: 'Memories';
-    font-size: 5em;
+    font-size: 5vw;
     letter-spacing: 0.1em;
     text-align: center;
+    margin-top: 5vh;
 }
 
 .level-buttons {
@@ -67,7 +93,7 @@ body {
     position: relative;
     /* ✅ necesario para el ::before */
     font-family: 'Memories';
-    font-size: 3em;
+    font-size: 3vw;
     letter-spacing: 0.1em;
     text-align: center;
     margin-top: 20px;

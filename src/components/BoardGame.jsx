@@ -38,11 +38,16 @@ const BoardGame = ({ attemptsOriginal, maskedWordOriginal, levelOriginal }) => {
     return (
         <div className="board-game">
             <div className="game-info">
+                  <div className="column col-left">
+
                 <AttempsImage attemptsOriginal={{ attempts }} level={levelOriginal.level} />
-                <p>Attempts: {attempts}</p>
+                <p className="attempts">Intentos: {attempts}</p>
+                </div>
+                <div className="column col-right">
                 <p className="masked-word">{maskedWord}</p>
                 <>{maskedWord && <KeyBoard handleCheckLetter={checkLetter} />}
                 </>
+                </div>
             </div>
             {(isGameOver || isWinner) && <Modal
                 title={isWinner ? "¡Ganaste!" : "Juego Terminado"}
