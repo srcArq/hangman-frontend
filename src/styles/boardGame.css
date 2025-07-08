@@ -17,19 +17,18 @@ html {
     display: flex;
     flex-direction: row;
     font-family: "Memories", sans-serif;
-    gap: 1rem;
-    /* espacio entre columnas */
+
     width: 100%;
     /* respeta el padding del padre */
-    font-family: "Memories", sans-serif;
     font-size: 1.5em;
     font-weight: bold;
+
 
 }
 
 /* 2) Estilos comunes a ambas columnas */
 .column {
-    flex: 1;
+
     /* cada columna ocupa espacio disponible */
     min-width: 0;
     /* permite que el contenido se encoja */
@@ -38,10 +37,28 @@ html {
     align-items: center;
 }
 
+.col-left {
+    flex: 0 0 40%;
+    /* no crece ni encoge, base 40% */
+    display: flex;
+    flex-direction: column;
+    margin-top: 10vh;
+    align-items: center;
+
+}
+
+.col-right {
+    flex: 0 0 60%;
+    /* no crece ni encoge, base 60% */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start-center;
+}
+
 /* 3) Ajustes particulares */
 .col-left .attempts-image {
-    width: 30dvh;
-    height: 30dvh;
+    width: 25vw;
+    max-width: 100%;
     margin-bottom: 1rem;
 }
 
@@ -52,10 +69,10 @@ html {
 }
 
 .col-right .masked-word {
-    font-size: 5em;
+    font-size: 4em;
     letter-spacing: 0.1em;
     text-align: center;
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .col-right .keyboard {
@@ -64,10 +81,9 @@ html {
     justify-content: center;
     gap: 0.5rem;
     width: 80%;
+    align-items: flex-start;
 }
 
 .col-right .keyboard button {
-    flex: 1 0 2.5rem;
-    /* cada botón mínimo de 2.5rem, se ajusta */
-    max-width: 3rem;
+    padding: 1vw 1.2vh;
 }
