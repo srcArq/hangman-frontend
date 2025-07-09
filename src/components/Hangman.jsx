@@ -39,7 +39,7 @@ const Hangman = () => {
             {word === null && <LevelSelector onSelectLevel={selectLevel} />}
             {attempts && maskedWord && <BoardGame attemptsOriginal={{ attempts }} maskedWordOriginal={{ maskedWord }} levelOriginal={{ level }} />}
             
-            <p>{word}</p>
+            {/* <p>{word}</p> */}
         </>
     );
 };
