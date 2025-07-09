@@ -32,14 +32,10 @@ _A fun, interactive Hangman game built with Astro, React and styled in CSS.
    git clone https://github.com/srcArq/hangman-frontend.git
    cd hangman-frontend
    
-<p align="center">
-  <img src="./assets/images/hangman-readme1.png" alt="Pantalla 1" width="200" />
-  <img src="/assets/images/hangman-readme2.png" alt="Pantalla 2" width="200" />
-  <img src="/assets/images/hangman-readme3.png" alt="Pantalla 3" width="200" />
-  <img src="/assets/images/hangman-readme4.png" alt="Pantalla 4" width="200" />
-</p>
+## 🕹️ Game
 
-![Descripción de la imagen](/assets/images/hangman-1.png)
-
+<img src="public/assets/images/hangman-readme1.png" alt="Game Over" width="300" />
+<img src="public/assets/images/hangman-readme2.png" alt="Game Over" width="300" />
+<img src="public/assets/images/hangman-readme3.png" alt="Game Over" width="300" />
 <img src="public/assets/images/hangman-readme4.png" alt="Game Over" width="300" />
-
+<img src="public/assets/images/hangman-readme5.png" alt="Game Over" width="300" />
