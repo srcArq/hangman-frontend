@@ -40,3 +40,6 @@ _A fun, interactive Hangman game built with Astro, React and styled in CSS.
 </p>
 
 ![Descripción de la imagen](/assets/images/hangman-1.png)
+
+<img src="public/assets/images/hangman-readme4.png" alt="Game Over" width="300" />
+
