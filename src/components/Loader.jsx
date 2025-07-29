@@ -10,7 +10,7 @@ const Loader = () => {
           <div key={index} className="loading-segment"></div>
         ))}
       </div>
-      <p className="loading-text">CARGANDO...</p>
+      <p className="loading-text">CARGANDO. . .</p>
     </div>
   );
 };
