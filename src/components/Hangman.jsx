@@ -14,8 +14,9 @@ const Hangman = () => {
     const PUBLIC_API_URL = import.meta.env.PUBLIC_API_URL;
 
     async function selectLevel(level) {
-        setLoading(true);  // Show loader when is selecting level
+        
         try {
+            setLoading(true);  // Show loader when is selecting level
             const response = await fetch(`${PUBLIC_API_URL}/api/selectLevel`, {
                 method: 'POST',
                 headers: {
