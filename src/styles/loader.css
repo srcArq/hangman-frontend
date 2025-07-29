@@ -4,43 +4,44 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: fixed; /* Lo fija en la ventana del navegador */
+  position: fixed; */
   top: 0;
   left: 0;
-  width: 100vw; /* Ocupa todo el ancho de la ventana */
-  height: 100vh; /* Ocupa todo el alto de la ventana */
-  background-color: rgba(255, 255, 255, 0.8); /* Blanco translúcido (0.8 de opacidad) */
-  z-index: 9999; /* Asegura que esté por encima de otros elementos */
+  width: 100vw; 
+  height: 100vh; 
+  background-color: rgba(255, 255, 255, 0.877); 
+  z-index: 9999; 
 }
 
 .loading-bar {
   display: flex;
-  width: 300px; /* Ancho de la barra */
-  height: 30px; /* Alto de la barra */
-  border: 2px solid #000; /* Borde negro como en la imagen */
-  border-radius: 5px; /* Ligeramente redondeado */
-  overflow: hidden; /* Oculta cualquier parte de los segmentos que se desborde */
+  width: 300px; 
+  height: 30px; 
+  border: 2px solid #000; 
+  border-radius: 5px; 
+  overflow: hidden; 
+  
 }
 
 .loading-segment {
-  flex: 1; /* Cada segmento ocupa el mismo espacio */
-  background-color: transparent; /* Inicialmente transparente */
-  border-right: 1px solid #000; /* Separación entre segmentos */
-  animation: fillSegments 2s infinite forwards; /* Animación de llenado */
+  flex: 1; 
+  background-color: transparent; 
+  border-right: 1px solid #000; 
+  animation: fillSegments 2s infinite forwards; 
 }
 
-/* Eliminar el borde derecho del último segmento para que no haya una línea extra al final */
+
 .loading-segment:last-child {
   border-right: none;
 }
 
-/* Animación para llenar los segmentos */
+/* Animation for filling segments */
 @keyframes fillSegments {
   0% {
     background-color: transparent;
   }
   10% {
-    background-color: #000; /* El primer segmento se llena */
+    background-color: #000; 
   }
   20% {
     background-color: #000;
@@ -67,11 +68,11 @@
     background-color: #000;
   }
   100% {
-    background-color: #000; /* Todos los segmentos llenos, luego se reinicia */
+    background-color: #000;
   }
 }
 
-/* Retraso individual para cada segmento para la animación de llenado progresivo */
+/* Delay for each segment to create a staggered effect */
 .loading-segment:nth-child(1) { animation-delay: 0s; }
 .loading-segment:nth-child(2) { animation-delay: 0.2s; }
 .loading-segment:nth-child(3) { animation-delay: 0.4s; }
@@ -85,11 +86,12 @@
 
 
 .loading-text {
-  margin-top: 20px; /* Espacio entre la barra y el texto */
-  font-family: 'Memories', cursive; /* Puedes usar una fuente similar a mano si tienes una importada */
-  font-size: 2em; /* Tamaño del texto */
-  color: #000; /* Color del texto */
-  animation: blinkText 1.5s infinite; /* Animación de parpadeo para los puntos suspensivos */
+  margin-top: 20px;
+  font-family: 'Memories', cursive; 
+  font-size: 2em;
+  font-weight: bold; 
+  color: #000; 
+  animation: blinkText 1.5s infinite; 
 }
 
 @keyframes blinkText {
