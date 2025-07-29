@@ -1,0 +1,98 @@
+/* src/LoadingBar.css */
+.loading-container {
+ display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed; /* Lo fija en la ventana del navegador */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Ocupa todo el ancho de la ventana */
+  height: 100vh; /* Ocupa todo el alto de la ventana */
+  background-color: rgba(255, 255, 255, 0.8); /* Blanco translúcido (0.8 de opacidad) */
+  z-index: 9999; /* Asegura que esté por encima de otros elementos */
+}
+
+.loading-bar {
+  display: flex;
+  width: 300px; /* Ancho de la barra */
+  height: 30px; /* Alto de la barra */
+  border: 2px solid #000; /* Borde negro como en la imagen */
+  border-radius: 5px; /* Ligeramente redondeado */
+  overflow: hidden; /* Oculta cualquier parte de los segmentos que se desborde */
+}
+
+.loading-segment {
+  flex: 1; /* Cada segmento ocupa el mismo espacio */
+  background-color: transparent; /* Inicialmente transparente */
+  border-right: 1px solid #000; /* Separación entre segmentos */
+  animation: fillSegments 2s infinite forwards; /* Animación de llenado */
+}
+
+/* Eliminar el borde derecho del último segmento para que no haya una línea extra al final */
+.loading-segment:last-child {
+  border-right: none;
+}
+
+/* Animación para llenar los segmentos */
+@keyframes fillSegments {
+  0% {
+    background-color: transparent;
+  }
+  10% {
+    background-color: #000; /* El primer segmento se llena */
+  }
+  20% {
+    background-color: #000;
+  }
+  30% {
+    background-color: #000;
+  }
+  40% {
+    background-color: #000;
+  }
+  50% {
+    background-color: #000;
+  }
+  60% {
+    background-color: #000;
+  }
+  70% {
+    background-color: #000;
+  }
+  80% {
+    background-color: #000;
+  }
+  90% {
+    background-color: #000;
+  }
+  100% {
+    background-color: #000; /* Todos los segmentos llenos, luego se reinicia */
+  }
+}
+
+/* Retraso individual para cada segmento para la animación de llenado progresivo */
+.loading-segment:nth-child(1) { animation-delay: 0s; }
+.loading-segment:nth-child(2) { animation-delay: 0.2s; }
+.loading-segment:nth-child(3) { animation-delay: 0.4s; }
+.loading-segment:nth-child(4) { animation-delay: 0.6s; }
+.loading-segment:nth-child(5) { animation-delay: 0.8s; }
+.loading-segment:nth-child(6) { animation-delay: 1.0s; }
+.loading-segment:nth-child(7) { animation-delay: 1.2s; }
+.loading-segment:nth-child(8) { animation-delay: 1.4s; }
+.loading-segment:nth-child(9) { animation-delay: 1.6s; }
+.loading-segment:nth-child(10) { animation-delay: 1.8s; }
+
+
+.loading-text {
+  margin-top: 20px; /* Espacio entre la barra y el texto */
+  font-family: 'Memories', cursive; /* Puedes usar una fuente similar a mano si tienes una importada */
+  font-size: 2em; /* Tamaño del texto */
+  color: #000; /* Color del texto */
+  animation: blinkText 1.5s infinite; /* Animación de parpadeo para los puntos suspensivos */
+}
+
+@keyframes blinkText {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
