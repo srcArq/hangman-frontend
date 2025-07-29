@@ -92,6 +92,7 @@
   font-weight: bold; 
   color: #000; 
   animation: blinkText 1.5s infinite; 
+  letter-spacing: 0.1em;
 }
 
 @keyframes blinkText {
