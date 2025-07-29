@@ -9,10 +9,9 @@ const BoardGame = ({ attemptsOriginal, maskedWordOriginal, levelOriginal }) => {
     const [isGameOver, setIsGameOver] = useState(false);
     const [isWinner, setIsWinner] = useState(false);
     const [resultWord, setResultWord] = useState("");
+
     // Import the public API URL from environment variables
     const PUBLIC_API_URL = import.meta.env.PUBLIC_API_URL;
-
-
 
     async function checkLetter(letter) {
         const response = await fetch(`${PUBLIC_API_URL}/api/checkLetter`, {
