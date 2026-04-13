@@ -8,12 +8,14 @@
 
 html {
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 }
 
 body {
-    min-width: 100%;
-    min-height: 100vh;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
 body {
@@ -62,15 +64,23 @@ body {
     font-family: 'SA', sans-serif;
     font-size: 8vw;
     text-align: center;
-    margin-top: 70px;
+    margin-top: 5vh;
     width: 100vw;
+
+    @media screen and (max-width: 768px) {
+        font-size: 10vw;
+        margin-top: 3vh;
+    }
 }
 
 .title.second-step {
-    font-size: 5vw;
+    font-size: 4vw;
+    margin-top: 2vh;
+
     @media screen and (max-width: 768px) {
         margin-left: 49px;
-        font-size: 8vw;
+        font-size: 7vw;
+        margin-top: 1vh;
     }
 }
 
@@ -79,7 +89,12 @@ body {
     font-size: 4vw;
     letter-spacing: 0.1em;
     text-align: center;
-    margin-top: 5vh;
+    margin-top: 3vh;
+
+    @media screen and (max-width: 768px) {
+        font-size: 6vw;
+        margin-top: 2vh;
+    }
 }
 
 .level-buttons {
@@ -88,20 +103,19 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 18px;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    gap: 2vh;
+    margin-top: 2vh;
+    margin-bottom: 0;
 }
 
 .gameButton {
     position: relative;
-    /* ✅ necesario para el ::before */
     font-family: 'Memories';
     font-size: 3vw;
     letter-spacing: 0.1em;
     text-align: center;
-    margin-top: 20px;
-    padding: 10px 20px;
+    margin-top: 1.5vh;
+    padding: 1vh 2vw;
     background-color: #ffffff;
     border: black 2px solid;
     border-radius: 5px;
@@ -109,8 +123,12 @@ body {
     color: black;
     font-weight: bold;
     overflow: hidden;
-    /* opcional si quieres que el borde no sobresalga */
     z-index: 0;
+
+    @media screen and (max-width: 768px) {
+        font-size: 5vw;
+        padding: 1.2vh 4vw;
+    }
 }
 
 /*Hover effect for gameButton: draw cross */
