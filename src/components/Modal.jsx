@@ -1,11 +1,9 @@
-// src/components/Modal.jsx
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 const Modal = ({ open, title, message, image, actionLabel, onAction }) => {
   const dialogRef = useRef();
 
   useEffect(() => {
-    console.log('Modal open state:', open);
     if (open) {
       dialogRef.current.showModal();
     } else {
@@ -14,16 +12,13 @@ const Modal = ({ open, title, message, image, actionLabel, onAction }) => {
   }, [open]);
 
   return (
-    <dialog ref={dialogRef} className="dialog-modal">
-      <form method="dialog" style={{ padding: '1.5rem', width: '90vw', maxWidth: '400px' }}>
+    <dialog ref={dialogRef} className="dialog-modal" aria-label={title}>
+      <form method="dialog">
         <h2 className="title-modal">{title}</h2>
-        {image && <img className="image-modal" src={image} alt="Modal" />}
+        {image && <img className="image-modal" src={image} alt={title} />}
         <p className="message-modal">{message}</p>
         <div>
-          <button
-            type="button"
-            onClick={onAction}
-          >
+          <button type="button" onClick={onAction}>
             {actionLabel}
           </button>
         </div>
@@ -31,6 +26,5 @@ const Modal = ({ open, title, message, image, actionLabel, onAction }) => {
     </dialog>
   );
 };
-
 
 export default Modal;

@@ -1,47 +1,38 @@
 import { useState, useEffect } from 'react';
 
-/**
- * KeyBoard Component
- * Renders an on-screen keyboard (A-Z) and listens for physical key presses.
- * Calls handleCheckLetter(letter) when a letter is selected.
- */
-const KeyBoard = ({ handleCheckLetter }) => {
-  // Track which letters have been used to disable them
+const LETTERS = [
+  ...Array.from({ length: 14 }, (_, i) => String.fromCharCode(65 + i)), // A-N
+  'Ñ',
+  ...Array.from({ length: 12 }, (_, i) => String.fromCharCode(79 + i)), // O-Z
+];
+
+const KeyBoard = ({ handleCheckLetter, disabled = false }) => {
   const [usedLetters, setUsedLetters] = useState(new Set());
 
-  // Handler for letter selection (click or keydown)
   const handleLetter = (letter) => {
     const upper = letter.toUpperCase();
-    if (!usedLetters.has(upper) && /^[A-ZÑ]$/.test(upper)) {
+    if (!disabled && !usedLetters.has(upper) && /^[A-ZÑ]$/.test(upper)) {
       setUsedLetters((prev) => new Set(prev).add(upper));
       handleCheckLetter(upper);
     }
   };
 
-  // Listen for physical keyboard events
   useEffect(() => {
-    const listener = (e) => {
-      const key = e.key.toUpperCase();
-      handleLetter(key);
-    };
+    const listener = (e) => handleLetter(e.key.toUpperCase());
     window.addEventListener('keydown', listener);
     return () => window.removeEventListener('keydown', listener);
-  }, [usedLetters]);
+  }, [usedLetters, disabled]);
 
-  // Create letters A-Z including Ñ
-const letters = [
-  ...Array.from({ length: 14 }, (_, i) => String.fromCharCode(65 + i)), // A-N
-  'Ñ',
-  ...Array.from({ length: 12 }, (_, i) => String.fromCharCode(79 + i)), // O-Z
-];
   return (
-    <div className="keyboard">
-      {letters.map((letter) => (
+    <div className="keyboard" role="group" aria-label="Teclado de letras">
+      {LETTERS.map((letter) => (
         <button
           key={letter}
-          className={`gameButton key black px-3 py-2 rounded-lg shadow ${usedLetters.has(letter) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+          className={`gameButton key ${usedLetters.has(letter) ? 'cursor-not-allowed' : ''}`}
           onClick={() => handleLetter(letter)}
-          disabled={usedLetters.has(letter)}
+          disabled={usedLetters.has(letter) || disabled}
+          aria-label={`Letra ${letter}`}
+          aria-disabled={usedLetters.has(letter) || disabled}
         >
           {letter}
         </button>
