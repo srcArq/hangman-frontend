@@ -4,7 +4,7 @@ import LevelSelector from "./LevelSelector";
 import Loader from "./Loader";
 
 const Hangman = () => {
-    const [word, setWord] = useState(null);
+    const [token, setToken] = useState(null);
     const [attempts, setAttempts] = useState(null);
     const [maskedWord, setMaskedWord] = useState(null);
     const [level, setLevel] = useState(null);
@@ -13,7 +13,7 @@ const Hangman = () => {
 
     const PUBLIC_API_URL = import.meta.env.PUBLIC_API_URL;
 
-    async function selectLevel(level) {
+    async function selectLevel(selectedLevel) {
         try {
             setLoading(true);
             setError(null);
@@ -22,7 +22,7 @@ const Hangman = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ level }),
+                body: JSON.stringify({ level: selectedLevel }),
             });
 
             if (!response.ok) {
@@ -30,10 +30,10 @@ const Hangman = () => {
             }
             const data = await response.json();
 
-            setWord(data.selectedWord);
+            setToken(data.token);
             setAttempts(data.attempts);
             setMaskedWord(data.maskedWord);
-            setLevel(level);
+            setLevel(selectedLevel);
         } catch (error) {
             setError('No se pudo conectar con el servidor. Inténtalo de nuevo.');
         } finally {
@@ -42,7 +42,7 @@ const Hangman = () => {
     }
 
     function resetGame() {
-        setWord(null);
+        setToken(null);
         setAttempts(null);
         setMaskedWord(null);
         setLevel(null);
@@ -51,7 +51,7 @@ const Hangman = () => {
 
     return (
         <>
-            <h1 className={`title ${word ? 'second-step' : ''}`}>AHORCADO</h1>
+            <h1 className={`title ${token ? 'second-step' : ''}`}>AHORCADO</h1>
             {loading && <Loader />}
             {error && (
                 <div className="error-message">
@@ -59,9 +59,15 @@ const Hangman = () => {
                     <button className="gameButton" onClick={() => setError(null)}>Reintentar</button>
                 </div>
             )}
-            {word === null && !error && <LevelSelector onSelectLevel={selectLevel} />}
-            {attempts && maskedWord && (
-                <BoardGame attempts={attempts} maskedWord={maskedWord} level={level} onPlayAgain={resetGame} />
+            {token === null && !error && <LevelSelector onSelectLevel={selectLevel} />}
+            {token && maskedWord && (
+                <BoardGame
+                    initialToken={token}
+                    initialAttempts={attempts}
+                    initialMaskedWord={maskedWord}
+                    level={level}
+                    onPlayAgain={resetGame}
+                />
             )}
         </>
     );
