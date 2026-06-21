@@ -188,3 +188,177 @@ body {
     gap: 1rem;
     margin-top: 5vh;
 }
+
+.scoreboard {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: 'Memories', sans-serif;
+    color: #111;
+    margin-top: 3vh;
+
+    @media screen and (max-width: 768px) {
+        gap: 1.6rem;
+    }
+}
+
+.scoreboard .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+}
+
+.scoreboard .stat-label {
+    font-size: 1.2rem;
+    letter-spacing: 0.06em;
+
+    @media screen and (max-width: 768px) {
+        font-size: 1rem;
+    }
+}
+
+.scoreboard .stat-value {
+    font-size: 2.2rem;
+    font-weight: bold;
+
+    @media screen and (max-width: 768px) {
+        font-size: 1.7rem;
+    }
+}
+
+/* Pantalla de inicio (nombre + idioma + dificultad + ranking) */
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 1vh;
+    max-height: calc(100vh - 16vh);
+    overflow-y: auto;
+    padding-bottom: 2vh;
+}
+
+.home .level-selector h2,
+.home .fontBody {
+    font-size: 1.8rem;
+    margin-top: 0.5vh;
+}
+
+.home .level-buttons {
+    gap: 0.8rem;
+    margin-top: 0.5vh;
+}
+
+.home .level-buttons .gameButton,
+.home .ranking-link {
+    font-size: 1.4rem;
+    margin-top: 0;
+    padding: 0.5rem 1.4rem;
+}
+
+/* Campo de nombre */
+.name-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'Memories', sans-serif;
+    font-size: 1.3rem;
+    color: #111;
+}
+
+.name-input {
+    font-family: 'Memories', sans-serif;
+    font-size: 1.4rem;
+    text-align: center;
+    border: none;
+    border-bottom: 2px solid #111;
+    background: transparent;
+    color: #111;
+    padding: 0.2rem 0.4rem;
+    max-width: 220px;
+    outline: none;
+}
+
+/* Selector de idioma */
+.language-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.language-selector .lang {
+    font-size: 1.2rem;
+    margin-top: 0;
+    padding: 0.4rem 1rem;
+}
+
+.language-selector .lang.selected {
+    background-color: #111;
+    color: #fff;
+}
+
+.ranking-link {
+    background-color: transparent;
+}
+
+/* Pantalla de ranking */
+.ranking {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Memories', sans-serif;
+    color: #111;
+    margin-top: 3vh;
+    width: 100%;
+}
+
+.ranking-title {
+    font-family: 'SA', sans-serif;
+    font-size: 2.5rem;
+}
+
+.ranking-msg {
+    font-family: 'Memories', sans-serif;
+    font-size: 1.3rem;
+}
+
+.ranking-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: min(90vw, 360px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ranking-row {
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.5rem;
+    border-bottom: 1px dashed #888;
+    padding: 0.2rem 0.4rem;
+}
+
+.ranking-row .r-pos {
+    font-weight: bold;
+    text-align: center;
+}
+
+.ranking-row .r-wins {
+    font-weight: bold;
+}
+
+.ranking-row .r-wins::after {
+    content: " vict.";
+    font-size: 0.9rem;
+    font-weight: normal;
+}
