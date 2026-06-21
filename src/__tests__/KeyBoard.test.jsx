@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import KeyBoard from '../components/KeyBoard';
 
 describe('KeyBoard', () => {
@@ -69,5 +69,30 @@ describe('KeyBoard', () => {
   it('has aria-label on keyboard group', () => {
     render(<KeyBoard handleCheckLetter={() => {}} />);
     expect(screen.getByRole('group')).toHaveAttribute('aria-label', 'Teclado de letras');
+  });
+
+  it('marks confirmed letters green (hit) or red (miss) based on maskedWord', () => {
+    render(
+      <KeyBoard handleCheckLetter={() => {}} usedLetters={['A', 'Z']} maskedWord={['_', 'A', '_']} />
+    );
+    expect(screen.getByText('A').className).toContain('key-hit');  // A está en la palabra
+    expect(screen.getByText('Z').className).toContain('key-miss'); // Z no está
+  });
+
+  it('re-enables the letter if the guess request fails (returns false)', async () => {
+    const handler = vi.fn().mockResolvedValue(false);
+    render(<KeyBoard handleCheckLetter={handler} />);
+    const btnA = screen.getByText('A');
+    fireEvent.click(btnA);
+    expect(handler).toHaveBeenCalledWith('A');
+    await waitFor(() => expect(btnA).not.toBeDisabled()); // se puede reintentar
+  });
+
+  it('keeps the letter disabled if the guess succeeds (returns true)', async () => {
+    const handler = vi.fn().mockResolvedValue(true);
+    render(<KeyBoard handleCheckLetter={handler} />);
+    const btnA = screen.getByText('A');
+    fireEvent.click(btnA);
+    await waitFor(() => expect(btnA).toBeDisabled());
   });
 });

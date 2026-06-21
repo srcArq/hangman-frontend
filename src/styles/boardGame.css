@@ -48,10 +48,12 @@
     margin-top: 2vh;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* alinear verticalmente con el cuadro de la izquierda */
 
     @media screen and (max-width: 768px) {
         flex: 1;
         margin-top: 1vh;
+        justify-content: flex-start;
     }
 }
 
@@ -116,5 +118,68 @@
 .cursor-not-allowed {
     cursor: not-allowed;
     color: light-dark(rgba(16, 16, 16, 0.3), rgba(16, 16, 16, 0.3));
+}
+
+/* Feedback de acierto/fallo en el teclado */
+.col-right .keyboard .key-hit {
+    background-color: #b6e3b6;
+    border-color: #2e7d32;
+    color: #1b5e20;
+    cursor: not-allowed;
+}
+
+.col-right .keyboard .key-miss {
+    background-color: #f3b6b6;
+    border-color: #c62828;
+    color: #7f1414;
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+
+/* Revelado animado de cada letra acertada */
+.col-right .masked-word .mw-blank,
+.col-right .masked-word .mw-letter {
+    display: inline-block;
+}
+
+.col-right .masked-word .mw-letter {
+    animation: reveal 0.35s ease;
+}
+
+@keyframes reveal {
+    0% { transform: scale(0) translateY(-0.2em); opacity: 0; }
+    60% { transform: scale(1.25); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* Sacudida del dibujo al fallar */
+.attempts-image-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.attempts-image-wrap.shake {
+    animation: shake 0.45s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px) rotate(-2deg); }
+    40% { transform: translateX(6px) rotate(2deg); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+}
+
+.network-error {
+    color: #c62828;
+    font-size: 1.2rem !important;
+    margin-top: 1vh !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .col-right .masked-word .mw-letter,
+    .attempts-image-wrap.shake {
+        animation: none;
+    }
 }
 
