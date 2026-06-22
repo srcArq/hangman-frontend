@@ -136,6 +136,16 @@ body {
     background-color: #f0f0f0;
 }
 
+/* Botón del nivel Extremo: destaca en rojo */
+.gameButton.extreme {
+    border-color: #c62828;
+    color: #c62828;
+}
+
+.gameButton.extreme:hover {
+    background-color: #fdeaea;
+}
+
 /* Ambas líneas iniciales, ocultas (scaleX=0) y rotadas */
 .gameButton::before,
 .gameButton::after {
