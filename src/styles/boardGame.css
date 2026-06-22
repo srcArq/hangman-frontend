@@ -162,6 +162,56 @@
     animation: shake 0.45s ease;
 }
 
+/* Modo Extremo: reloj de arena + temporizador */
+.hourglass-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.hourglass-wrap.shake {
+    animation: shake 0.45s ease;
+}
+
+.col-left .hourglass {
+    width: 14vw;
+    max-width: 150px;
+    max-height: 35vh;
+    height: auto;
+
+    @media screen and (max-width: 768px) {
+        width: 28vw;
+        max-height: 20vh;
+    }
+}
+
+.hourglass.urgent {
+    transform-origin: center;
+    animation: hg-shake 0.4s ease-in-out infinite;
+}
+
+@keyframes hg-shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-6deg); }
+    75% { transform: rotate(6deg); }
+}
+
+.extreme-timer {
+    font-family: 'Memories', sans-serif;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-top: 0.3rem;
+}
+
+.extreme-timer.urgent {
+    color: #c62828;
+    animation: timer-pulse 0.6s ease-in-out infinite;
+}
+
+@keyframes timer-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     20% { transform: translateX(-6px) rotate(-2deg); }
@@ -178,7 +228,10 @@
 
 @media (prefers-reduced-motion: reduce) {
     .col-right .masked-word .mw-letter,
-    .attempts-image-wrap.shake {
+    .attempts-image-wrap.shake,
+    .hourglass-wrap.shake,
+    .hourglass.urgent,
+    .extreme-timer.urgent {
         animation: none;
     }
 }

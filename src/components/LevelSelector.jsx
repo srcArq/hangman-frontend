@@ -6,6 +6,7 @@ const LevelSelector = ({ onSelectLevel }) => {
         <button className="gameButton" onClick={() => onSelectLevel(1)}>Fácil</button>
         <button className="gameButton" onClick={() => onSelectLevel(2)}>Medio</button>
         <button className="gameButton" onClick={() => onSelectLevel(3)}>Difícil</button>
+        <button className="gameButton extreme" onClick={() => onSelectLevel(4)}>Extremo</button>
       </div>
     </div>
   );
