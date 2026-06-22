@@ -123,7 +123,7 @@ const Hangman = () => {
         setError(null);
     }
 
-    function handleResult(status) {
+    function handleResult(status, token) {
         setStats((prev) => {
             const next = status === "WON"
                 ? { wins: prev.wins + 1, losses: prev.losses, streak: prev.streak + 1 }
@@ -136,12 +136,13 @@ const Hangman = () => {
             return next;
         });
 
-        // Registrar la victoria en el ranking global (fire-and-forget).
-        if (status === "WON" && name.trim()) {
+        // Registrar la victoria en el ranking global (fire-and-forget). Se envía
+        // el token ganador para que el servidor verifique que la partida es real.
+        if (status === "WON" && name.trim() && token) {
             fetch(`${PUBLIC_API_URL}/api/score`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: name.trim() }),
+                body: JSON.stringify({ name: name.trim(), token }),
             }).catch(() => { /* si falla, el ranking simplemente no se actualiza */ });
         }
     }

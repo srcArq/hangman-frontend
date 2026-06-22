@@ -77,7 +77,7 @@ const BoardGame = ({
                 setTimeout(() => setShake(false), 500);
             }
             if (data.status === "WON" || data.status === "LOST") {
-                onResult?.(data.status);
+                onResult?.(data.status, data.token);
             }
             return true;
         } catch (error) {
