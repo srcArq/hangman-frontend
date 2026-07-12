@@ -1,101 +1,98 @@
-/* src/LoadingBar.css */
 .loading-container {
- display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: fixed; 
-  top: 0;
-  left: 0;
-  width: 100vw; 
-  height: 100vh; 
-  background-color: rgba(245, 243, 243, 0.97); 
-  z-index: 9999; 
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(239, 235, 222, 0.72);
+    backdrop-filter: blur(3px);
 }
 
+.loading-container::before {
+    content: '';
+    position: absolute;
+    width: min(420px, calc(100vw - 34px));
+    height: 190px;
+    border: 1px solid rgba(23, 24, 22, 0.22);
+    border-radius: 8px 19px 7px 17px / 16px 7px 18px 8px;
+    background-color: var(--paper);
+    background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 29px, rgba(76, 118, 157, 0.13) 29px, rgba(76, 118, 157, 0.13) 30px);
+    box-shadow: 7px 9px 0 rgba(23, 24, 22, 0.12);
+    transform: rotate(-0.7deg);
+}
+
+.loading-container::after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 105px);
+    width: 92px;
+    height: 24px;
+    background: rgba(216, 205, 171, 0.7);
+    box-shadow: 0 1px 2px rgba(47, 42, 31, 0.12);
+    transform: rotate(1.4deg);
+}
+
+.loading-bar,
+.loading-text { position: relative; z-index: 1; }
+
 .loading-bar {
-  display: flex;
-  width: 300px; 
-  height: 30px; 
-  border: 2px solid #000; 
-  border-radius: 5px; 
-  overflow: hidden; 
-  
+    display: flex;
+    width: min(300px, calc(100vw - 90px));
+    height: 26px;
+    overflow: hidden;
+    border: 2px solid var(--ink);
+    border-radius: 7px 3px 8px 4px / 4px 8px 3px 7px;
+    background: rgba(255, 254, 248, 0.8);
+    transform: rotate(0.4deg);
 }
 
 .loading-segment {
-  flex: 1; 
-  background-color: transparent; 
-  border-right: 1px solid #000; 
-  animation: fillSegments 2s infinite forwards; 
+    flex: 1;
+    border-right: 1px solid rgba(23, 24, 22, 0.72);
+    background: transparent;
+    animation: fill-segment 2s ease-in-out infinite;
 }
 
-
-.loading-segment:last-child {
-  border-right: none;
-}
-
-/* Animation for filling segments */
-@keyframes fillSegments {
-  0% {
-    background-color: transparent;
-  }
-  10% {
-    background-color: #000; 
-  }
-  20% {
-    background-color: #000;
-  }
-  30% {
-    background-color: #000;
-  }
-  40% {
-    background-color: #000;
-  }
-  50% {
-    background-color: #000;
-  }
-  60% {
-    background-color: #000;
-  }
-  70% {
-    background-color: #000;
-  }
-  80% {
-    background-color: #000;
-  }
-  90% {
-    background-color: #000;
-  }
-  100% {
-    background-color: #000;
-  }
-}
-
-/* Delay for each segment to create a staggered effect */
+.loading-segment:last-child { border-right: 0; }
 .loading-segment:nth-child(1) { animation-delay: 0s; }
-.loading-segment:nth-child(2) { animation-delay: 0.2s; }
-.loading-segment:nth-child(3) { animation-delay: 0.4s; }
-.loading-segment:nth-child(4) { animation-delay: 0.6s; }
-.loading-segment:nth-child(5) { animation-delay: 0.8s; }
-.loading-segment:nth-child(6) { animation-delay: 1.0s; }
-.loading-segment:nth-child(7) { animation-delay: 1.2s; }
-.loading-segment:nth-child(8) { animation-delay: 1.4s; }
-.loading-segment:nth-child(9) { animation-delay: 1.6s; }
-.loading-segment:nth-child(10) { animation-delay: 1.8s; }
-
+.loading-segment:nth-child(2) { animation-delay: 0.12s; }
+.loading-segment:nth-child(3) { animation-delay: 0.24s; }
+.loading-segment:nth-child(4) { animation-delay: 0.36s; }
+.loading-segment:nth-child(5) { animation-delay: 0.48s; }
+.loading-segment:nth-child(6) { animation-delay: 0.6s; }
+.loading-segment:nth-child(7) { animation-delay: 0.72s; }
+.loading-segment:nth-child(8) { animation-delay: 0.84s; }
+.loading-segment:nth-child(9) { animation-delay: 0.96s; }
+.loading-segment:nth-child(10) { animation-delay: 1.08s; }
 
 .loading-text {
-  margin-top: 20px;
-  font-family: 'Memories', cursive; 
-  font-size: 2em;
-  font-weight: bold; 
-  color: #000; 
-  animation: blinkText 1.5s infinite; 
-  letter-spacing: 0.1em;
+    margin: 0;
+    padding: 0.15rem 0.55rem;
+    background: rgba(255, 254, 248, 0.74);
+    color: var(--ink);
+    font-family: 'Memories', cursive;
+    font-size: clamp(1.45rem, 5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    animation: loading-pulse 1.5s ease-in-out infinite;
 }
 
-@keyframes blinkText {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+@keyframes fill-segment {
+    0%, 15% { background: transparent; }
+    45%, 75% { background: var(--ink); }
+    100% { background: transparent; }
+}
+
+@keyframes loading-pulse {
+    0%, 100% { opacity: 1; transform: rotate(-0.4deg); }
+    50% { opacity: 0.55; transform: rotate(0.4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .loading-segment,
+    .loading-text { animation: none; }
 }

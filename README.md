@@ -1,111 +1,116 @@
-# Hangman Frontend
+# Ahorcado Frontend
 
-_A fun, interactive Hangman game built with Astro, React and styled in CSS.
+Juego del Ahorcado responsive construido con Astro y React, con estética de libreta dibujada a lápiz.
 
-[Live Demo → 🌐](https://hangman-frontend-sable.vercel.app)
-
----
-
-## Features
-
-- **Multiple difficulty levels** (Easy, Medium, Hard)  
-- **Responsive layout**: plays great on desktop, tablet and mobile  
-- **Animated Hangman drawing** as you make incorrect guesses  
-- **Clean, modern UI** with custom fonts and CSS modules  
-- **Win/Lose modal** with play‑again option  
+[Jugar en producción](https://hangman-frontend-sable.vercel.app) · [API en Render](https://hangman-backend-1.onrender.com/actuator/health)
 
 ---
 
-## 🛠️ Tech Stack
+## Funcionalidades
 
-- **Framework:** [Astro](https://astro.build)  
-- **UI Libraries:** React.  
-- **Styling:** Plain CSS (modular styles in `src/styles`)  
-- **Build & Deploy:** Vite-powered Astro, deployed on Vercel  
+- Cuatro dificultades: Fácil, Medio, Difícil y Extremo contra reloj.
+- Palabras en castellano, catalán e inglés.
+- Teclado físico y virtual con feedback visual de aciertos y fallos.
+- Partida reanudable mediante `localStorage`, estadísticas locales y racha.
+- Nombre de jugador y ranking global de las cinco mejores puntuaciones.
+- Animaciones de dibujo, revelado de letras y modales de victoria/derrota.
+- Diseño responsive comprobado en escritorio, tablet y móvil.
+- Interfaz accesible con etiquetas ARIA, foco visible y reducción de movimiento.
 
 ---
 
-## 🚀 Getting Started
+## Stack
 
-1. **Clone the repo**
+- Astro 5.10 y Vite.
+- React 19.
+- CSS modular por áreas, sin framework visual.
+- Vitest, Testing Library y jsdom.
+- Despliegue del frontend en Vercel; backend Spring Boot en Render.
+
+---
+
+## Desarrollo local
+
+1. **Clona el repositorio**
 
    ```bash
    git clone https://github.com/srcArq/hangman-frontend.git
    cd hangman-frontend
    ```
 
-2. **Install dependencies**
+2. **Instala dependencias**
 
    ```bash
    npm install
    ```
 
-3. **Configure environment variables**
+3. **Configura las variables de entorno**
 
-   Copy the example file and set the backend API base URL:
+   Copia el archivo de ejemplo y define la URL base del backend:
 
    ```bash
    cp .env.example .env
    ```
 
-   Then edit `.env` and set `PUBLIC_API_URL` to your backend base URL
-   (e.g. `http://localhost:8080` in local development):
+   Después edita `.env` y ajusta `PUBLIC_API_URL` a tu backend
+   (`http://localhost:8080` en desarrollo local):
 
    ```bash
    PUBLIC_API_URL=http://localhost:8080
    ```
 
-   > **Note:** `PUBLIC_API_URL` is a **public, client-side** variable
-   > (the `PUBLIC_` prefix exposes it to the browser via
-   > `import.meta.env.PUBLIC_API_URL`). Do **not** store secrets in it.
+   `PUBLIC_API_URL` es pública y termina en el bundle del navegador. No debe contener secretos.
 
-4. **Run the development server**
+4. **Arranca el servidor de desarrollo**
 
    ```bash
    npm run dev
    ```
 
-   The app will be available at the URL printed in the console
-   (by default `http://localhost:4321`).
+   La aplicación quedará disponible en la URL indicada por la consola
+   (por defecto `http://localhost:4321`).
 
-5. **Build for production**
+5. **Genera la build de producción**
 
    ```bash
    npm run build
    ```
 
-   Preview the production build locally:
+   Previsualiza la build de producción en local:
 
    ```bash
    npm run preview
    ```
 
-6. **Run the tests**
+6. **Ejecuta los tests**
 
    ```bash
-   npm run test
+   npm test
    ```
 
 ---
 
-## ☁️ Deploy on Vercel
+## Despliegue
 
-This project is deployed on Vercel. Remember to define the `PUBLIC_API_URL`
-environment variable in the Vercel project settings so the frontend can reach
-the backend.
+El frontend se publica en Vercel desde la rama `main`. La variable
+`PUBLIC_API_URL` debe apuntar a `https://hangman-backend-1.onrender.com` en los
+entornos de producción y preview que deban usar el backend real.
 
 ---
 
-## 🕹️ Game
+## Capturas actuales
+
+### Inicio móvil
 
 <p align="center">
-  <img src="public/assets/images/hangman-readme1.png" alt="Pantalla 1" width="300" />
-  <img src="public/assets/images/hangman-readme2.png" alt="Pantalla 2" width="300" />
-  <img src="public/assets/images/hangman-readme3.png" alt="Pantalla 3" width="300" />
+  <img src="public/assets/images/hangman-readme2.png" alt="Inicio responsive del Ahorcado en móvil" width="390" />
 </p>
 
+### Partida en escritorio
+
 <p align="center">
-  <img src="public/assets/images/hangman-readme4.png" alt="Pantalla 4" width="300" />
-  <img src="public/assets/images/hangman-readme5.png" alt="Pantalla 5" width="300" />
+  <img src="public/assets/images/hangman-readme3.png" alt="Partida del Ahorcado con teclado y feedback de letras" width="900" />
 </p>
+
+Las capturas fueron regeneradas desde la aplicación local validada.
 

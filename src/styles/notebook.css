@@ -1,374 +1,520 @@
+:root {
+    --ink: #171816;
+    --ink-soft: #4d4e49;
+    --paper: #fffef8;
+    --paper-deep: #f3efe2;
+    --rule: rgba(76, 118, 157, 0.16);
+    --margin-rule: rgba(174, 70, 70, 0.3);
+    --pencil-shadow: rgba(30, 31, 28, 0.18);
+    --paper-wash: rgba(255, 254, 248, 0.88);
+    --notebook-margin: 62px;
+}
+
 *,
 *::before,
 *::after {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
-html {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-}
-
-body {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-}
-
-body {
+* {
     margin: 0;
     padding: 0;
-    background-color: #fff;
-    width: 100vw;
-    height: 100vh;
+}
 
+html {
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    background: #d8d2c2;
+}
+
+body {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    color: var(--ink);
+    background-color: var(--paper);
     background-image:
-        /* Horizontal stripes */
-        repeating-linear-gradient(to bottom,
-            black 0,
-            black 1px,
-            transparent 1px,
-            transparent 30px),
-        /* Vertical margin line */
+        radial-gradient(circle at 18px 16px, rgba(24, 25, 23, 0.72) 0 3px, transparent 3.5px),
         linear-gradient(to right,
-            transparent 49px,
-            black 49px,
-            black 50px,
-            transparent 50px),
-        /* Ring circles (left of the vertical line) */
-        radial-gradient(circle, black 0%, black 20%, transparent 21%);
+            transparent 0,
+            transparent calc(var(--notebook-margin) - 2px),
+            var(--margin-rule) calc(var(--notebook-margin) - 2px),
+            var(--margin-rule) var(--notebook-margin),
+            transparent var(--notebook-margin)),
+        repeating-linear-gradient(to bottom,
+            transparent 0,
+            transparent 30px,
+            var(--rule) 30px,
+            var(--rule) 31px),
+        radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.95), transparent 68%),
+        linear-gradient(118deg, rgba(98, 82, 54, 0.035), transparent 28%, rgba(98, 82, 54, 0.025) 72%, transparent);
+    background-repeat: repeat-y, no-repeat, repeat, no-repeat, no-repeat;
+    background-position: 18px 14px, 0 0, 0 0, 0 0, 0 0;
+    background-size: 10px 62px, 100% 100%, auto 31px, 100% 100%, 100% 100%;
+    box-shadow:
+        inset 0 0 70px rgba(65, 54, 35, 0.09),
+        inset -14px 0 22px rgba(65, 54, 35, 0.04);
+}
 
-    background-repeat: repeat, no-repeat, repeat-y;
+/* Folded top corner and a soft crease across the sheet. */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 20;
+    width: clamp(54px, 7vw, 92px);
+    aspect-ratio: 1;
+    pointer-events: none;
+    clip-path: polygon(0 0, 100% 100%, 100% 0);
+    background:
+        linear-gradient(135deg,
+            rgba(205, 198, 177, 0.96) 0 48%,
+            rgba(255, 254, 248, 0.98) 50% 100%);
+    filter: drop-shadow(-5px 6px 5px rgba(56, 48, 35, 0.18));
+}
 
-    background-position:
-        top left,
-        /* horizontal stripes */
-        top left,
-        /* vertical line */
-        20px 15px;
-    /* ring circles */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 19;
+    pointer-events: none;
+    background:
+        linear-gradient(166deg, transparent 0 55%, rgba(85, 75, 56, 0.035) 55.3%, transparent 56%),
+        linear-gradient(8deg, transparent 0 74%, rgba(85, 75, 56, 0.025) 74.3%, transparent 75%);
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.35);
+}
 
-    background-size:
-        auto 30px,
-        /* horizontal stripes */
-        100% auto,
-        /* línea vertical */
-        10px 60px;
-    /* círculos (tamaño y separación vertical) */
+button,
+input {
+    font: inherit;
 }
 
 .title {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-inline: calc(var(--notebook-margin) + 12px) 48px;
+    margin-top: clamp(18px, 4vh, 44px);
     font-family: 'SA', sans-serif;
-    font-size: 8vw;
+    font-size: clamp(4.4rem, 8vw, 8rem);
+    line-height: 0.92;
+    letter-spacing: 0.035em;
     text-align: center;
-    margin-top: 5vh;
-    width: 100vw;
-
-    @media screen and (max-width: 768px) {
-        font-size: 10vw;
-        margin-top: 3vh;
-    }
+    text-wrap: balance;
+    text-shadow:
+        0 2px 0 rgba(255, 254, 248, 0.95),
+        1px 0 0 rgba(255, 254, 248, 0.75),
+        -1px 0 0 rgba(255, 254, 248, 0.75);
 }
 
 .title.second-step {
-    font-size: 4vw;
-    margin-top: 2vh;
-
-    @media screen and (max-width: 768px) {
-        margin-left: 49px;
-        font-size: 7vw;
-        margin-top: 1vh;
-    }
+    margin-top: clamp(10px, 1.8vh, 20px);
+    font-size: clamp(2.7rem, 4.4vw, 4.7rem);
 }
 
 .fontBody {
-    font-family: 'Memories';
-    font-size: 4vw;
-    letter-spacing: 0.1em;
+    font-family: 'Memories', sans-serif;
+    font-size: clamp(1.65rem, 3vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: 0.06em;
     text-align: center;
-    margin-top: 3vh;
-
-    @media screen and (max-width: 768px) {
-        font-size: 6vw;
-        margin-top: 2vh;
-    }
+    text-shadow: 0 1px 0 var(--paper), 0 -1px 0 var(--paper);
 }
 
-.level-buttons {
-    font-family: 'Memories';
+.home {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 2vh;
-    margin-top: 2vh;
-    margin-bottom: 0;
+    gap: clamp(0.7rem, 1.4vh, 1.15rem);
+    width: min(760px, calc(100% - var(--notebook-margin) - 42px));
+    max-height: calc(100dvh - clamp(116px, 17vh, 174px));
+    margin: clamp(8px, 1.2vh, 14px) 24px 0 calc(var(--notebook-margin) + 18px);
+    padding: clamp(0.8rem, 1.8vh, 1.35rem) clamp(1rem, 4vw, 3.2rem) 1.4rem;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(23, 24, 22, 0.35) transparent;
+    border: 1px solid rgba(50, 48, 42, 0.12);
+    border-radius: 22px 8px 18px 6px / 9px 20px 7px 18px;
+    background: linear-gradient(108deg, rgba(255, 254, 248, 0.83), rgba(255, 254, 248, 0.68));
+    box-shadow: 3px 5px 0 rgba(44, 43, 39, 0.055);
+}
+
+@media (min-width: 900px) {
+    .home {
+        margin-inline: auto;
+        transform: translateX(calc(var(--notebook-margin) / 3));
+    }
+}
+
+.home .level-selector {
+    width: min(100%, 440px);
+}
+
+.home .level-selector h2,
+.home .fontBody {
+    margin-top: 0;
+    font-size: clamp(1.55rem, 2.3vw, 2.1rem);
+}
+
+.level-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 0.65rem 0.8rem;
+    width: 100%;
+    margin-top: 0.55rem;
+    font-family: 'Memories', sans-serif;
 }
 
 .gameButton {
     position: relative;
-    font-family: 'Memories';
-    font-size: 3vw;
-    letter-spacing: 0.1em;
-    text-align: center;
-    margin-top: 1.5vh;
-    padding: 1vh 2vw;
-    background-color: #ffffff;
-    border: black 2px solid;
-    border-radius: 5px;
-    cursor: pointer;
-    color: black;
-    font-weight: bold;
-    overflow: hidden;
     z-index: 0;
-
-    @media screen and (max-width: 768px) {
-        font-size: 5vw;
-        padding: 1.2vh 4vw;
-    }
+    min-height: 44px;
+    padding: 0.58rem 1.3rem;
+    overflow: hidden;
+    border: 2px solid rgba(23, 24, 22, 0.88);
+    border-radius: 8px 4px 9px 5px / 5px 9px 4px 8px;
+    background: rgba(255, 254, 248, 0.9);
+    box-shadow: 2px 3px 0 rgba(23, 24, 22, 0.12);
+    color: var(--ink);
+    font-family: 'Memories', sans-serif;
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.055em;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
-/*Hover effect for gameButton: draw cross */
-.gameButton:hover {
-    background-color: #f0f0f0;
-}
-
-/* Botón del nivel Extremo: destaca en rojo */
-.gameButton.extreme {
-    border-color: #c62828;
-    color: #c62828;
-}
-
-.gameButton.extreme:hover {
-    background-color: #fdeaea;
-}
-
-/* Ambas líneas iniciales, ocultas (scaleX=0) y rotadas */
-.gameButton::before,
 .gameButton::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 150%;
-    /* un poco más para cubrir esquinas */
+    right: 16%;
+    bottom: 7px;
+    left: 16%;
+    z-index: -1;
     height: 2px;
-    /* grosor de lápiz */
-    background: rgba(46, 45, 45, 0.436);
-    transform-origin: center center;
-    transform: translate(-50%, -50%) rotate(45deg) scaleX(0);
-    /* estarán sobre el botón */
-    z-index: 1;
+    background: rgba(23, 24, 22, 0.33);
+    transform: rotate(-1.5deg) scaleX(0);
+    transform-origin: left;
+    transition: transform 180ms ease;
 }
 
-/* Second line with opposite rotation */
-.gameButton::after {
-    transform: translate(-50%, -50%) rotate(-45deg) scaleX(0);
+.gameButton:hover:not(:disabled),
+.gameButton:focus-visible {
+    outline: none;
+    background: #fffdf4;
+    box-shadow: 4px 5px 0 rgba(23, 24, 22, 0.16);
+    transform: translate(-1px, -2px) rotate(-0.3deg);
 }
 
-/* Keyframes for scaling from 0 → 1 while maintaining rotation */
-@keyframes draw-line-1 {
-    to {
-        transform: translate(-50%, -50%) rotate(45deg) scaleX(1);
-    }
+.gameButton:hover:not(:disabled)::after,
+.gameButton:focus-visible::after {
+    transform: rotate(-1.5deg) scaleX(1);
 }
 
-@keyframes draw-line-2 {
-    to {
-        transform: translate(-50%, -50%) rotate(-45deg) scaleX(1);
-    }
+.gameButton:focus-visible,
+.name-input:focus-visible {
+    outline: 3px solid rgba(50, 93, 127, 0.35);
+    outline-offset: 3px;
 }
 
-/* On hover, first line / then the opposite */
-.gameButton:hover::before {
-    animation: draw-line-1 0.3s ease-out forwards;
+.gameButton:disabled {
+    cursor: not-allowed;
 }
 
-.gameButton:hover::after {
-    animation: draw-line-2 0.3s ease-out 0.15s forwards;
+.gameButton.extreme {
+    border-color: #8f2727;
+    color: #8f2727;
+}
+
+.gameButton.extreme:hover:not(:disabled) {
+    background: #fff4ee;
 }
 
 .error-message {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    margin-top: 5vh;
+    width: min(620px, calc(100% - var(--notebook-margin) - 32px));
+    margin: 5vh auto 0;
+    padding: 1.5rem;
+    background: var(--paper-wash);
+}
+
+.name-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    width: min(100%, 320px);
+    color: var(--ink-soft);
+    font-family: 'Memories', sans-serif;
+    font-size: 1.25rem;
+}
+
+.name-input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.3rem 0.65rem;
+    border: 0;
+    border-bottom: 2px solid rgba(23, 24, 22, 0.8);
+    border-radius: 8px 8px 2px 2px;
+    outline: none;
+    background: rgba(255, 254, 248, 0.72);
+    color: var(--ink);
+    font-family: 'Memories', sans-serif;
+    font-size: clamp(1.35rem, 2vw, 1.65rem);
+    text-align: center;
+}
+
+.language-selector {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    gap: 0.65rem;
+    width: min(100%, 440px);
+}
+
+.language-selector .lang {
+    min-width: 0;
+    padding-inline: 0.7rem;
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+}
+
+.language-selector .lang.selected {
+    background: var(--ink);
+    color: var(--paper);
+    box-shadow: 3px 4px 0 rgba(23, 24, 22, 0.2);
+}
+
+.language-selector .lang.selected::after,
+.keyboard .gameButton::after {
+    display: none;
+}
+
+.ranking-link {
+    width: min(100%, 280px);
+    margin-top: 0.1rem;
 }
 
 .scoreboard {
-    display: flex;
-    gap: 2.5rem;
-    justify-content: center;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(70px, 1fr));
+    gap: clamp(0.85rem, 3vw, 2.5rem);
+    width: min(100%, 430px);
+    padding-top: 0.25rem;
+    color: var(--ink);
     font-family: 'Memories', sans-serif;
-    color: #111;
-    margin-top: 3vh;
-
-    @media screen and (max-width: 768px) {
-        gap: 1.6rem;
-    }
 }
 
 .scoreboard .stat {
     display: flex;
     flex-direction: column;
     align-items: center;
-    line-height: 1.1;
+    min-width: 0;
+    line-height: 1.05;
 }
 
 .scoreboard .stat-label {
-    font-size: 1.2rem;
-    letter-spacing: 0.06em;
-
-    @media screen and (max-width: 768px) {
-        font-size: 1rem;
-    }
+    color: var(--ink-soft);
+    font-size: clamp(0.95rem, 1.7vw, 1.2rem);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
 }
 
 .scoreboard .stat-value {
-    font-size: 2.2rem;
-    font-weight: bold;
-
-    @media screen and (max-width: 768px) {
-        font-size: 1.7rem;
-    }
+    font-size: clamp(1.65rem, 3vw, 2.25rem);
+    font-weight: 700;
 }
 
-/* Pantalla de inicio (nombre + idioma + dificultad + ranking) */
-.home {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-    margin-top: 1vh;
-    max-height: calc(100vh - 16vh);
-    overflow-y: auto;
-    padding-bottom: 2vh;
-}
-
-.home .level-selector h2,
-.home .fontBody {
-    font-size: 1.8rem;
-    margin-top: 0.5vh;
-}
-
-.home .level-buttons {
-    gap: 0.8rem;
-    margin-top: 0.5vh;
-}
-
-.home .level-buttons .gameButton,
-.home .ranking-link {
-    font-size: 1.4rem;
-    margin-top: 0;
-    padding: 0.5rem 1.4rem;
-}
-
-/* Campo de nombre */
-.name-field {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-    font-family: 'Memories', sans-serif;
-    font-size: 1.3rem;
-    color: #111;
-}
-
-.name-input {
-    font-family: 'Memories', sans-serif;
-    font-size: 1.4rem;
-    text-align: center;
-    border: none;
-    border-bottom: 2px solid #111;
-    background: transparent;
-    color: #111;
-    padding: 0.2rem 0.4rem;
-    max-width: 220px;
-    outline: none;
-}
-
-/* Selector de idioma */
-.language-selector {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.6rem;
-}
-
-.language-selector .lang {
-    font-size: 1.2rem;
-    margin-top: 0;
-    padding: 0.4rem 1rem;
-}
-
-.language-selector .lang.selected {
-    background-color: #111;
-    color: #fff;
-}
-
-.ranking-link {
-    background-color: transparent;
-}
-
-/* Pantalla de ranking */
 .ranking {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1.1rem;
+    width: min(560px, calc(100% - var(--notebook-margin) - 38px));
+    max-height: calc(100dvh - 150px);
+    margin: clamp(16px, 3vh, 32px) auto 0;
+    padding: clamp(1.25rem, 4vw, 2.25rem);
+    overflow-y: auto;
+    border: 1px solid rgba(23, 24, 22, 0.16);
+    border-radius: 5px 18px 7px 16px / 14px 6px 18px 7px;
+    background: rgba(255, 254, 248, 0.88);
+    box-shadow: 5px 6px 0 rgba(23, 24, 22, 0.08);
+    color: var(--ink);
     font-family: 'Memories', sans-serif;
-    color: #111;
-    margin-top: 3vh;
-    width: 100%;
+}
+
+.ranking::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    width: 92px;
+    height: 24px;
+    background: rgba(216, 205, 171, 0.62);
+    box-shadow: 0 1px 2px rgba(47, 42, 31, 0.12);
+    transform: translateX(-50%) rotate(-1.5deg);
 }
 
 .ranking-title {
     font-family: 'SA', sans-serif;
-    font-size: 2.5rem;
+    font-size: clamp(2.8rem, 6vw, 4.6rem);
+    line-height: 1;
 }
 
 .ranking-msg {
-    font-family: 'Memories', sans-serif;
-    font-size: 1.3rem;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    text-align: center;
 }
 
 .ranking-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: min(90vw, 360px);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.45rem;
+    width: min(100%, 410px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .ranking-row {
     display: grid;
-    grid-template-columns: 2rem 1fr auto;
+    grid-template-columns: 2.4rem minmax(0, 1fr) auto;
     align-items: center;
-    gap: 0.6rem;
-    font-size: 1.5rem;
-    border-bottom: 1px dashed #888;
-    padding: 0.2rem 0.4rem;
+    gap: 0.75rem;
+    min-height: 42px;
+    padding: 0.25rem 0.55rem;
+    border-bottom: 1px dashed rgba(23, 24, 22, 0.45);
+    font-size: clamp(1.25rem, 2.8vw, 1.65rem);
+}
+
+.ranking-row .r-pos,
+.ranking-row .r-wins {
+    font-weight: 700;
 }
 
 .ranking-row .r-pos {
-    font-weight: bold;
     text-align: center;
 }
 
+.ranking-row .r-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .ranking-row .r-wins {
-    font-weight: bold;
+    white-space: nowrap;
 }
 
 .ranking-row .r-wins::after {
-    content: " vict.";
-    font-size: 0.9rem;
-    font-weight: normal;
+    content: ' vict.';
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --notebook-margin: 54px;
+    }
+
+    .title {
+        padding-right: 22px;
+        padding-left: calc(var(--notebook-margin) + 8px);
+        margin-top: 18px;
+        font-size: clamp(3.2rem, 14vw, 5.2rem);
+    }
+
+    .title.second-step {
+        margin-top: 9px;
+        font-size: clamp(2.5rem, 10vw, 3.8rem);
+    }
+
+    .home {
+        width: calc(100% - var(--notebook-margin) - 16px);
+        max-height: calc(100dvh - 108px);
+        margin-left: var(--notebook-margin);
+        margin-right: 16px;
+        padding: 0.8rem 0.75rem 1.2rem;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        background: rgba(255, 254, 248, 0.7);
+        box-shadow: none;
+    }
+
+    .language-selector {
+        gap: 0.45rem;
+    }
+
+    .language-selector .lang {
+        min-height: 42px;
+        padding: 0.45rem 0.35rem;
+        font-size: clamp(0.95rem, 4vw, 1.15rem);
+        letter-spacing: 0.025em;
+    }
+
+    .level-buttons {
+        gap: 0.55rem;
+    }
+
+    .home .level-buttons .gameButton {
+        padding-inline: 0.45rem;
+        font-size: clamp(1.05rem, 4.6vw, 1.35rem);
+    }
+
+    .ranking {
+        width: calc(100% - var(--notebook-margin) - 18px);
+        max-height: calc(100dvh - 120px);
+        margin-left: var(--notebook-margin);
+        margin-right: 18px;
+        padding: 1.35rem 0.85rem;
+    }
+}
+
+@media (max-width: 420px) {
+    :root {
+        --notebook-margin: 48px;
+    }
+
+    .home {
+        gap: 0.62rem;
+    }
+
+    .language-selector {
+        grid-template-columns: 1fr;
+        width: min(100%, 230px);
+    }
+
+    .language-selector .lang {
+        min-height: 38px;
+    }
+
+    .level-buttons {
+        grid-template-columns: repeat(2, minmax(94px, 1fr));
+    }
+
+    .scoreboard {
+        gap: 0.45rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gameButton {
+        transition: none;
+    }
 }
