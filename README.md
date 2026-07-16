@@ -12,8 +12,9 @@ Juego del Ahorcado responsive construido con Astro y React, con estética de lib
 - Palabras en castellano, catalán e inglés.
 - Teclado físico y virtual con feedback visual de aciertos y fallos.
 - Partida reanudable mediante `localStorage`, estadísticas locales y racha.
-- Nombre de jugador y ranking global de las cinco mejores puntuaciones.
+- Nombre de jugador sin login, sesión anónima por navegador y ranking global top 5.
 - Animaciones de dibujo, revelado de letras y modales de victoria/derrota.
+- La palabra se muestra al ganar o perder en cualquier dificultad e idioma.
 - Diseño responsive comprobado en escritorio, tablet y móvil.
 - Interfaz accesible con etiquetas ARIA, foco visible y reducción de movimiento.
 

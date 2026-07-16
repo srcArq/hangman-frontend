@@ -10,6 +10,7 @@ const GAME_KEY = "hangman:game";
 const STATS_KEY = "hangman:stats";
 const NAME_KEY = "hangman:name";
 const LANG_KEY = "hangman:lang";
+const BROWSER_ID_KEY = "hangman:browser-id";
 const EMPTY_STATS = { wins: 0, losses: 0, streak: 0 };
 
 function loadStats() {
@@ -22,16 +23,26 @@ function loadStats() {
     return EMPTY_STATS;
 }
 
+function createBrowserId() {
+    if (typeof crypto !== "undefined" && crypto.randomUUID) {
+        return crypto.randomUUID();
+    }
+    return `browser-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
 const Hangman = () => {
     const [token, setToken] = useState(null);
     const [attempts, setAttempts] = useState(null);
     const [maskedWord, setMaskedWord] = useState(null);
     const [guessedLetters, setGuessedLetters] = useState([]);
+    const [remainingTimeMillis, setRemainingTimeMillis] = useState(0);
     const [level, setLevel] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [stats, setStats] = useState(EMPTY_STATS);
     const [name, setName] = useState("");
+    const [browserId, setBrowserId] = useState("");
+    const [rankingMessage, setRankingMessage] = useState("");
     const [language, setLanguage] = useState("ES");
     const [view, setView] = useState("home"); // home | ranking
 
@@ -43,6 +54,9 @@ const Hangman = () => {
         try {
             const savedName = localStorage.getItem(NAME_KEY);
             setName(savedName || `Jugador${Math.floor(1000 + Math.random() * 9000)}`);
+            const savedBrowserId = localStorage.getItem(BROWSER_ID_KEY) || createBrowserId();
+            localStorage.setItem(BROWSER_ID_KEY, savedBrowserId);
+            setBrowserId(savedBrowserId);
             const savedLang = localStorage.getItem(LANG_KEY);
             if (savedLang) setLanguage(savedLang);
 
@@ -54,6 +68,7 @@ const Hangman = () => {
                     setAttempts(saved.attempts);
                     setMaskedWord(saved.maskedWord);
                     setGuessedLetters(saved.guessedLetters ?? []);
+                    setRemainingTimeMillis(saved.remainingTimeMillis ?? 0);
                     setLevel(saved.level);
                 }
             }
@@ -81,9 +96,15 @@ const Hangman = () => {
     }
 
     async function selectLevel(selectedLevel) {
+        const playerName = name.trim();
+        if (!playerName) {
+            setError('Escribe un nombre de jugador para empezar.');
+            return;
+        }
         try {
             setLoading(true);
             setError(null);
+            setRankingMessage("");
             const response = await fetch(`${PUBLIC_API_URL}/api/selectLevel`, {
                 method: 'POST',
                 headers: {
@@ -101,6 +122,7 @@ const Hangman = () => {
             setAttempts(data.attempts);
             setMaskedWord(data.maskedWord);
             setGuessedLetters([]);
+            setRemainingTimeMillis(data.remainingTimeMillis ?? 0);
             setLevel(selectedLevel);
         } catch (error) {
             setError('No se pudo conectar con el servidor. Inténtalo de nuevo.');
@@ -119,8 +141,10 @@ const Hangman = () => {
         setAttempts(null);
         setMaskedWord(null);
         setGuessedLetters([]);
+        setRemainingTimeMillis(0);
         setLevel(null);
         setError(null);
+        setRankingMessage("");
     }
 
     function handleResult(status, token) {
@@ -136,14 +160,21 @@ const Hangman = () => {
             return next;
         });
 
-        // Registrar la victoria en el ranking global (fire-and-forget). Se envía
-        // el token ganador para que el servidor verifique que la partida es real.
+        // Registrar la victoria en el ranking global. Se envía el token ganador
+        // para que el servidor verifique que la partida es real.
         if (status === "WON" && name.trim() && token) {
             fetch(`${PUBLIC_API_URL}/api/score`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: name.trim(), token }),
-            }).catch(() => { /* si falla, el ranking simplemente no se actualiza */ });
+                body: JSON.stringify({ name: name.trim(), browserId, token }),
+            })
+                .then((response) => {
+                    if (!response.ok) throw new Error("ranking failed");
+                    setRankingMessage("Victoria guardada en el ranking.");
+                })
+                .catch(() => {
+                    setRankingMessage("No se pudo guardar la victoria en el ranking.");
+                });
         }
     }
 
@@ -183,6 +214,9 @@ const Hangman = () => {
                         Ver ranking
                     </button>
                     <Scoreboard stats={stats} />
+                    {rankingMessage && (
+                        <p className="ranking-msg" role="status">{rankingMessage}</p>
+                    )}
                 </div>
             )}
 
@@ -192,6 +226,7 @@ const Hangman = () => {
                     initialAttempts={attempts}
                     initialMaskedWord={maskedWord}
                     initialGuessedLetters={guessedLetters}
+                    initialRemainingTimeMillis={remainingTimeMillis}
                     level={level}
                     onPlayAgain={resetGame}
                     onResult={handleResult}

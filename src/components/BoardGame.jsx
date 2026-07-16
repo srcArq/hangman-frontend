@@ -18,6 +18,7 @@ const BoardGame = ({
     initialAttempts,
     initialMaskedWord,
     initialGuessedLetters = [],
+    initialRemainingTimeMillis = 0,
     level,
     onPlayAgain,
     onResult,
@@ -33,11 +34,16 @@ const BoardGame = ({
     const [checking, setChecking] = useState(false);
     const [networkError, setNetworkError] = useState(false);
     const [shake, setShake] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(isExtreme ? EXTREME_INITIAL : 0);
+    const [timeLeft, setTimeLeft] = useState(
+        isExtreme && initialRemainingTimeMillis > 0
+            ? initialRemainingTimeMillis / 1000
+            : (isExtreme ? EXTREME_INITIAL : 0)
+    );
     const [timedOut, setTimedOut] = useState(false);
 
     const checkingRef = useRef(false); // guard sincrónico anti-carreras de token
     const endedRef = useRef(false);    // garantiza un único onResult por partida
+    const timeoutRef = useRef(false);   // evita cerrar dos veces por cuenta atrás
     const PUBLIC_API_URL = import.meta.env.PUBLIC_API_URL;
 
     const isWinner = status === "WON";
@@ -58,7 +64,14 @@ const BoardGame = ({
             } else {
                 localStorage.setItem(
                     STORAGE_KEY,
-                    JSON.stringify({ token, attempts, maskedWord, guessedLetters, level })
+                    JSON.stringify({
+                        token,
+                        attempts,
+                        maskedWord,
+                        guessedLetters,
+                        remainingTimeMillis: Math.max(0, Math.round(timeLeft * 1000)),
+                        level,
+                    })
                 );
             }
         } catch {
@@ -78,13 +91,49 @@ const BoardGame = ({
         return () => clearInterval(id);
     }, [isExtreme, finished]);
 
-    // Fin por tiempo agotado.
+    // Fin por tiempo agotado: se cierra contra el backend para revelar la palabra.
     useEffect(() => {
-        if (isExtreme && !finished && timeLeft <= 0) {
-            setTimedOut(true);
-            fireResult("LOST", null);
+        if (isExtreme && !finished && timeLeft <= 0 && !timeoutRef.current) {
+            timeoutRef.current = true;
+            finishByTimeout();
         }
     }, [isExtreme, finished, timeLeft]);
+
+    async function finishByTimeout() {
+        checkingRef.current = true;
+        try {
+            setChecking(true);
+            setNetworkError(false);
+            const response = await fetch(`${PUBLIC_API_URL}/api/finish`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+
+            setToken(data.token);
+            setAttempts(data.attempts);
+            setMaskedWord(data.maskedWord);
+            setStatus(data.status);
+            setResultWord(data.resultWord ?? "");
+            setGuessedLetters(data.guessedLetters ?? []);
+            setTimeLeft(Math.max(0, (data.remainingTimeMillis ?? 0) / 1000));
+            setTimedOut(true);
+            fireResult("LOST", data.token);
+        } catch (error) {
+            setTimedOut(true);
+            setStatus("LOST");
+            setNetworkError(true);
+            fireResult("LOST", null);
+        } finally {
+            setChecking(false);
+            checkingRef.current = false;
+        }
+    }
 
     async function checkLetter(letter) {
         if (checkingRef.current || finished) return false;
@@ -118,8 +167,10 @@ const BoardGame = ({
                 setTimeout(() => setShake(false), 500);
             }
 
-            // Modo Extremo: ajustar tiempo (salvo si ya ha ganado).
-            if (isExtreme && data.status !== "WON") {
+            // Modo Extremo: el backend es la fuente de verdad del tiempo.
+            if (isExtreme && data.remainingTimeMillis !== undefined && data.remainingTimeMillis !== null) {
+                setTimeLeft(Math.max(0, data.remainingTimeMillis / 1000));
+            } else if (isExtreme && data.status !== "WON") {
                 setTimeLeft((t) => Math.max(0, t + (wasWrong ? -EXTREME_PENALTY : EXTREME_BONUS)));
             }
 
@@ -137,9 +188,13 @@ const BoardGame = ({
     }
 
     const urgent = isExtreme && timeLeft <= EXTREME_URGENT;
+    const wordMessage = resultWord ? ` La palabra era '${resultWord}'.` : "";
+    const winMessage = resultWord
+        ? `¡Felicidades! Has adivinado la palabra '${resultWord}'.`
+        : "¡Felicidades! Has adivinado la palabra.";
     const lossMessage = timedOut
-        ? "¡Se acabó el tiempo! Sé más rápido la próxima vez."
-        : `Lo siento, has agotado tus intentos. La palabra era '${resultWord}'.`;
+        ? `¡Se acabó el tiempo!${wordMessage}`
+        : `Lo siento, has agotado tus intentos.${wordMessage}`;
 
     return (
         <div className="board-game">
@@ -191,7 +246,7 @@ const BoardGame = ({
                     open={finished}
                     variant={isWinner ? 'win' : 'lose'}
                     title={isWinner ? "¡Ganaste!" : "Juego Terminado"}
-                    message={isWinner ? "¡Felicidades! Has adivinado la palabra." : lossMessage}
+                    message={isWinner ? winMessage : lossMessage}
                     image={isWinner ? "/assets/images/hangman-winner.png" : "/assets/images/hangman-loser.png"}
                     actionLabel="Jugar de nuevo"
                     onAction={onPlayAgain}
